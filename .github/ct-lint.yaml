@@ -1,0 +1,3 @@
+validate-chart-schema: true
+validate-maintainers: false
+validate-yaml: true
