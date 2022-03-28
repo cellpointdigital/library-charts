@@ -1,6 +1,6 @@
 name: Lint and Test Charts
 
-on: push
+on: pull_request
 
 jobs:
   lint-test:
@@ -23,13 +23,13 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.2.1
 
-#      - name: Run chart-testing (list-changed)
-#        id: list-changed
-#        run: |
-#          changed=$(ct list-changed --targer-branch main)
-#          if [[ -n "$changed" ]]; then
-#            echo "::set-output name=changed::true"
-#          fi
+      - name: Detect changed charts (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --targer-branch main)
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
 
       - name: Run chart-testing (lint)
         run: ct lint --all --config .github/ct-lint.yaml
