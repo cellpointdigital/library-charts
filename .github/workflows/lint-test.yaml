@@ -39,4 +39,4 @@ jobs:
 #        if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/ct-install.yaml
+        run: ct install --all --config .github/ct-install.yaml

@@ -1,0 +1,12 @@
+annotations:
+  category: library-test-app
+apiVersion: v2
+dependencies:
+  - name: common
+    repository: https://cellpointdigital.github.io/library-charts/
+    version: 0.1.0
+name: test-app
+description: Test deployment to validate chart library
+version: 0.1.0
+keywords:
+  - test-app
