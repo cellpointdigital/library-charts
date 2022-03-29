@@ -1,0 +1,7 @@
+excluded-charts:
+  - common
+chart-repos:
+  - lib=https://cellpointdigital.github.io/library-charts/
+chart-dirs:
+  - charts
+  - .

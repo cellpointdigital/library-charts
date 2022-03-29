@@ -1,0 +1,7 @@
+# overrides for default chart values, used for CI testing by "ct" tool, see https://github.com/helm/chart-testing/blob/main/doc/ct_install.md
+image:
+  repository: ealen/echo-server
+  tag: latest
+env:
+  - name: PORT
+    value: 8080
