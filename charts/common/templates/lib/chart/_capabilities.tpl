@@ -26,3 +26,12 @@
     {{- print "beta2" -}}
   {{- end -}}
 {{- end -}}
+
+{{/* Return the appropriate apiVersion for cronjob. */}}
+{{- define "common.capabilities.cronjob.apiVersion" -}}
+{{- if semverCompare "<1.21-0" (include "common.capabilities.kubeVersion" .) -}}
+{{- print "batch/v1beta1" -}}
+{{- else -}}
+{{- print "batch/v1" -}}
+{{- end -}}
+{{- end -}}

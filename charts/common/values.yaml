@@ -455,3 +455,28 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+cronjob:
+  # -- enable the cronjob.
+  enabled: false
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 60
+  failedJobsHistoryLimit: 5
+  successfulJobsHistoryLimit: 5
+  suspend: false
+  image:
+    repository:
+    tag:
+    pullPolicy:
+  # -- Override the command(s) for the default container
+  command: []
+  # -- Override the args for the default container
+  args: []
+  env:
+  envFrom: []
+  secret: {}
+  termination:
+    messagePath:
+    messagePolicy:
+  # -- Specify any initContainers for cronjob here as dictionary items. Each initContainer should have its own key.
+  # The dictionary item key will determine the order. Helm templates can be used.
+  initContainers: {}

@@ -35,4 +35,9 @@ Main entrypoint for the common library chart. It will render all underlying temp
   {{- if .Values.secret -}}
     {{ include "common.secret" .  | nindent 0 }}
   {{- end -}}
+
+  {{- if .Values.cronjob.enabled }}
+    {{ include "common.cronjob" .  | nindent 0 }}
+  {{- end -}}
+
 {{- end -}}
