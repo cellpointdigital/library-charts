@@ -33,6 +33,8 @@
   {{- with .Values.cronjob.termination.messagePolicy }}
   terminationMessagePolicy: {{ . }}
   {{- end }}
+  stdin: false
+  tty: false
 
   {{- with .Values.cronjob.env }}
   env:
