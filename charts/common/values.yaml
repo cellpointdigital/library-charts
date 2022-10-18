@@ -463,6 +463,7 @@ cronjob:
   failedJobsHistoryLimit: 5
   successfulJobsHistoryLimit: 5
   suspend: false
+  restartPolicy: Never
   image:
     repository:
     tag:

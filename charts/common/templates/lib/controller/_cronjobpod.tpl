@@ -7,6 +7,7 @@ imagePullSecrets:
     {{- toYaml . | nindent 2 }}
   {{ end -}}
 serviceAccountName: {{ include "common.names.serviceAccountName" . }}
+restartPolicy: {{ .Values.cronjob.restartPolicy | default "Never" }}
 automountServiceAccountToken: {{ .Values.cronjob.automountServiceAccountToken }}
   {{- with .Values.cronjob.podSecurityContext }}
 securityContext:
