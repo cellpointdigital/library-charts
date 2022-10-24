@@ -1,53 +1,61 @@
 {{- /*
 The pod definition included in the controller.
 */ -}}
-{{- define "common.controller.cronjobPod" -}}
-  {{- with .Values.cronjob.imagePullSecrets }}
+{{- define "common.cronjob.poditem" -}}
+  {{- $cronjobValues := list -}}
+  {{- if hasKey . "cronjobValues" -}}
+    {{- with .cronjobValues -}}
+      {{- $cronjobValues = . -}}
+    {{- end -}}
+  {{ end }}
+  {{- with $cronjobValues.imagePullSecrets }}
 imagePullSecrets:
     {{- toYaml . | nindent 2 }}
   {{ end -}}
 serviceAccountName: {{ include "common.names.serviceAccountName" . }}
-restartPolicy: {{ .Values.cronjob.restartPolicy | default "Never" }}
-automountServiceAccountToken: {{ .Values.cronjob.automountServiceAccountToken }}
-  {{- with .Values.cronjob.podSecurityContext }}
+restartPolicy: {{ $cronjobValues.restartPolicy | default "Never" }}
+automountServiceAccountToken: {{ $cronjobValues.automountServiceAccountToken }}
+  {{- with $cronjobValues.podSecurityContext }}
 securityContext:
     {{- toYaml . | nindent 2 }}
   {{- end }}
-  {{- with .Values.cronjob.priorityClassName }}
+  {{- with $cronjobValues.priorityClassName }}
 priorityClassName: {{ . }}
   {{- end }}
-  {{- with .Values.cronjob.runtimeClassName }}
+  {{- with $cronjobValues.runtimeClassName }}
 runtimeClassName: {{ . }}
   {{- end }}
-  {{- with .Values.cronjob.schedulerName }}
+  {{- with $cronjobValues.schedulerName }}
 schedulerName: {{ . }}
   {{- end }}
-  {{- with .Values.cronjob.hostNetwork }}
+  {{- with $cronjobValues.hostNetwork }}
 hostNetwork: {{ . }}
   {{- end }}
-  {{- with .Values.cronjob.hostname }}
+  {{- with $cronjobValues.hostname }}
 hostname: {{ . }}
   {{- end }}
-  {{- if .Values.cronjob.dnsPolicy }}
-dnsPolicy: {{ .Values.cronjob.dnsPolicy }}
-  {{- else if .Values.cronjob.hostNetwork }}
+  {{- if $cronjobValues.dnsPolicy }}
+dnsPolicy: {{ $cronjobValues.dnsPolicy }}
+  {{- else if $cronjobValues.hostNetwork }}
 dnsPolicy: ClusterFirstWithHostNet
   {{- else }}
 dnsPolicy: ClusterFirst
   {{- end }}
-  {{- with .Values.cronjob.dnsConfig }}
+  {{- with $cronjobValues.dnsConfig }}
 dnsConfig:
     {{- toYaml . | nindent 2 }}
   {{- end }}
-enableServiceLinks: {{ .Values.cronjob.enableServiceLinks }}
-  {{- with .Values.cronjob.termination.gracePeriodSeconds }}
+enableServiceLinks: {{ $cronjobValues.enableServiceLinks }}
+  {{- if hasKey $cronjobValues "termination" -}}
+    {{- with $cronjobValues.termination.gracePeriodSeconds }}
 terminationGracePeriodSeconds: {{ . }}
+    {{- end }}
   {{- end }}
-  {{- if .Values.cronjob.initContainers }}
+  {{- if $cronjobValues.initContainers }}
 initContainers:
     {{- $initContainers := list }}
-    {{- range $index, $key := (keys .Values.cronjob.initContainers | uniq | sortAlpha) }}
-      {{- $container := get $.Values.cronjob.initContainers $key }}
+    {{- range $index, $key := (keys $cronjobValues.initContainers | uniq | sortAlpha) }}
+      {{- $container := get $cronjobValues.initContainers $key }}
       {{- if not $container.name -}}
         {{- $_ := set $container "name" $key }}
       {{- end }}
@@ -56,8 +64,8 @@ initContainers:
     {{- tpl (toYaml $initContainers) $ | nindent 2 }}
   {{- end }}
 containers:
-  {{- include "common.controller.cronjobContainer" . | nindent 2 }}
-  {{- with .Values.cronjob.additionalContainers }}
+  {{- include "common.cronjob.containeritem" . | nindent 2 }}
+  {{- with $cronjobValues.additionalContainers }}
     {{- $additionalContainers := list }}
     {{- range $name, $container := . }}
       {{- if not $container.name -}}
@@ -71,23 +79,23 @@ containers:
 volumes:
     {{- nindent 2 . }}
   {{- end }}
-  {{- with .Values.cronjob.hostAliases }}
+  {{- with $cronjobValues.hostAliases }}
 hostAliases:
     {{- toYaml . | nindent 2 }}
   {{- end }}
-  {{- with .Values.cronjob.nodeSelector }}
+  {{- with $cronjobValues.nodeSelector }}
 nodeSelector:
     {{- toYaml . | nindent 2 }}
   {{- end }}
-  {{- with .Values.cronjob.affinity }}
+  {{- with $cronjobValues.affinity }}
 affinity:
     {{- toYaml . | nindent 2 }}
   {{- end }}
-  {{- with .Values.cronjob.topologySpreadConstraints }}
+  {{- with $cronjobValues.topologySpreadConstraints }}
 topologySpreadConstraints:
     {{- toYaml . | nindent 2 }}
   {{- end }}
-  {{- with .Values.cronjob.tolerations }}
+  {{- with $cronjobValues.tolerations }}
 tolerations:
     {{- toYaml . | nindent 2 }}
   {{- end }}

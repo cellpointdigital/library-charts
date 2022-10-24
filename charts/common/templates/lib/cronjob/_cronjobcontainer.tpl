@@ -1,5 +1,5 @@
 {{- /* The main container included in the controller */ -}}
-{{- define "common.controller.cronjobContainer" -}}
+{{- define "common.cronjob.container" -}}
 - name: {{ include "common.names.fullname" . }}
   image: {{ printf "%s:%s" .Values.cronjob.image.repository (default .Chart.AppVersion .Values.cronjob.image.tag) | quote }}
   imagePullPolicy: {{ .Values.cronjob.image.pullPolicy }}

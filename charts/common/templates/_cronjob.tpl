@@ -39,6 +39,6 @@ spec:
             {{- include "common.labels" . | nindent 12 }}
             name: {{ $cronJobName }}
         spec:
-          {{- include "common.controller.cronjobPod" . | nindent 10 }}
+          {{- include "common.cronjob.pod" . | nindent 10 }}
 
 {{- end }}

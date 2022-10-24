@@ -40,4 +40,8 @@ Main entrypoint for the common library chart. It will render all underlying temp
     {{ include "common.cronjob" .  | nindent 0 }}
   {{- end -}}
 
+  {{- if .Values.cronjobs }}
+    {{ include "common.cronjobs" .  | nindent 0 }}
+  {{- end }}
+
 {{- end -}}
