@@ -8,7 +8,9 @@
   {{- end -}}
 - name: {{ include "common.names.fullname" . }}-{{ $cronjobValues.name }}
   image: {{ printf "%s:%s" $cronjobValues.image.repository (default .Chart.AppVersion $cronjobValues.image.tag) | quote }}
-  imagePullPolicy: {{ $cronjobValues.image.pullPolicy }}
+  {{- with $cronjobValues.image.pullPolicy }}
+  imagePullPolicy: {{ . }}
+  {{- end }}
   {{- with $cronjobValues.command }}
   command:
     {{- if kindIs "string" . }}

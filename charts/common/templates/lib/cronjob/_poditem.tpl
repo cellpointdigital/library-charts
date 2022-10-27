@@ -14,7 +14,9 @@ imagePullSecrets:
   {{ end -}}
 serviceAccountName: {{ include "common.names.serviceAccountName" . }}
 restartPolicy: {{ $cronjobValues.restartPolicy | default "Never" }}
-automountServiceAccountToken: {{ $cronjobValues.automountServiceAccountToken }}
+  {{- with $cronjobValues.automountServiceAccountToken }}
+automountServiceAccountToken: {{ . }}
+  {{- end }}
   {{- with $cronjobValues.podSecurityContext }}
 securityContext:
     {{- toYaml . | nindent 2 }}
@@ -45,7 +47,9 @@ dnsPolicy: ClusterFirst
 dnsConfig:
     {{- toYaml . | nindent 2 }}
   {{- end }}
-enableServiceLinks: {{ $cronjobValues.enableServiceLinks }}
+  {{- with $cronjobValues.enableServiceLinks }}
+enableServiceLinks: {{ . }}
+  {{- end }}
   {{- if hasKey $cronjobValues "termination" -}}
     {{- with $cronjobValues.termination.gracePeriodSeconds }}
 terminationGracePeriodSeconds: {{ . }}
