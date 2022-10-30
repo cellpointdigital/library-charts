@@ -1,3 +1,4 @@
+{{- /* The cronjob item based on values from "cronjobValues" */ -}}
 {{- define "common.cronjobitem" }}
   {{- $cronjobValues := list -}}
   {{- if hasKey . "cronjobValues" -}}

@@ -1,0 +1,67 @@
+image:
+  repository: registry.t.cpm.dev/library/com.cellpointdigital.cpdsbatch.server
+  tag: 1.0.999-SNAPSHOT
+  pullPolicy: IfNotPresent
+  env:
+    - name: CLUSTER_NAME
+      value: dev-eu-02
+persistence:
+  app-secret:
+    enabled: true
+    name: batch-app
+    # Valid options are pvc, emptyDir, hostPath, secret, configMap or custom
+    type: secret
+    # -- Where to mount the volume in the main container.
+    # Defaults to `/<name_of_the_volume>`,
+    # setting to '-' creates the volume but disables the volumeMount.
+    mountPath: /secrets/database/app
+    readOnly: true
+
+cronjob:
+  enabled: true
+  schedule: 0 */12 * * *
+  image:
+    repository: europe-west4-docker.pkg.dev/cpd-future/container-images/cronapp
+    tag: 1.2.3
+  env:  
+    name: DB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: password
+        name: batch-app
+
+  initContainers:
+    initcontainer1:
+      repository: registry.t.cpm.dev/library/com.cellpointdigital.cpdsbatch.liquibase
+      tag: 1.0.999-SNAPSHOT
+      env:
+        - name: DB_DBNAME
+          value: cpdsbatch
+
+cronjobs:
+  job2:
+    schedule: 0 */2 * * *
+    image:
+      repository: europe-west4-docker.pkg.dev/cpd-future/container-images/cronapp
+      tag: 1.2.5
+  job4:
+    schedule: 0 */4 * * *
+    image:
+      repository: europe-west4-docker.pkg.dev/cpd-future/container-images/cronapp
+      tag: 1.2.5
+      pullPolicy: Always
+    env:  
+      name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: password
+          name: batch-app
+
+    initContainers:
+      initcontainer1:
+        repository: registry.t.cpm.dev/library/com.cellpointdigital.cpdsbatch.liquibase
+        tag: 1.0.999-SNAPSHOT
+        imagePullPolicy: Always
+        env:
+          - name: DB_DBNAME
+            value: cpdsbatch

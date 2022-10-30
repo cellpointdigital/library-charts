@@ -1,3 +1,6 @@
+{{/*
+Template for multiple cronjobs.
+*/}}
 {{- define "common.cronjobs" }}
   {{- /* Generate named cronjobs */ -}}
   {{- range $index, $key := (keys .Values.cronjobs | uniq | sortAlpha) }}

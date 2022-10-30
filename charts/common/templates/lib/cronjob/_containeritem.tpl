@@ -1,4 +1,4 @@
-{{- /* The main container included in the controller */ -}}
+{{- /* The main container included in the cronjob */ -}}
 {{- define "common.cronjob.containeritem" -}}
   {{- $cronjobValues := list -}}
   {{- if hasKey . "cronjobValues" -}}

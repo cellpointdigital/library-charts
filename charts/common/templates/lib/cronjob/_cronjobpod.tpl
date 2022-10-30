@@ -1,5 +1,5 @@
 {{- /*
-The pod definition included in the controller.
+The pod definition included in the cronjob.
 */ -}}
 {{- define "common.cronjob.pod" -}}
   {{- with .Values.cronjob.imagePullSecrets }}
