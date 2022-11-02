@@ -1,3 +1,6 @@
+{{/*
+Template for single cronjob. Kept for compatibility. "common.cronjobs" can be used instead.
+*/}}
 {{- define "common.cronjob" }}
 {{- $cronJobName := include "common.names.fullname" . -}}
 ---
@@ -39,6 +42,6 @@ spec:
             {{- include "common.labels" . | nindent 12 }}
             name: {{ $cronJobName }}
         spec:
-          {{- include "common.controller.cronjobPod" . | nindent 10 }}
+          {{- include "common.cronjob.pod" . | nindent 10 }}
 
 {{- end }}

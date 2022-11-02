@@ -1,7 +1,7 @@
 {{- /*
-The pod definition included in the controller.
+The pod definition included in the cronjob.
 */ -}}
-{{- define "common.controller.cronjobPod" -}}
+{{- define "common.cronjob.pod" -}}
   {{- with .Values.cronjob.imagePullSecrets }}
 imagePullSecrets:
     {{- toYaml . | nindent 2 }}
@@ -56,7 +56,7 @@ initContainers:
     {{- tpl (toYaml $initContainers) $ | nindent 2 }}
   {{- end }}
 containers:
-  {{- include "common.controller.cronjobContainer" . | nindent 2 }}
+  {{- include "common.cronjob.container" . | nindent 2 }}
   {{- with .Values.cronjob.additionalContainers }}
     {{- $additionalContainers := list }}
     {{- range $name, $container := . }}
