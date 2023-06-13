@@ -24,6 +24,9 @@ spec:
   {{- if and (ne $strategy "Recreate") (ne $strategy "RollingUpdate") }}
     {{- fail (printf "Not a valid strategy type for Deployment (%s)" $strategy) }}
   {{- end }}
+  {{- with .Values.controller.minReadySeconds }}
+  minReadySeconds: {{ . }}
+  {{- end }}
   strategy:
     type: {{ $strategy }}
     {{- with .Values.controller.rollingUpdate }}
