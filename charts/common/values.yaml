@@ -65,6 +65,10 @@ autoscaling:
   targetMemoryUtilizationPercentage:  # 80
   behavior: {}
 
+podDisruptionBudget:
+  minAvailable:
+  maxUnavailable:
+
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: false

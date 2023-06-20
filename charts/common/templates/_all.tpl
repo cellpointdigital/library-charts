@@ -44,4 +44,8 @@ Main entrypoint for the common library chart. It will render all underlying temp
     {{ include "common.cronjobs" .  | nindent 0 }}
   {{- end }}
 
+  {{- if .Values.podDisruptionBudget }}
+    {{ include "common.pdb" .  | nindent 0 }}
+  {{- end }}
+
 {{- end -}}
