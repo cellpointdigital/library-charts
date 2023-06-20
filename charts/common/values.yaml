@@ -32,6 +32,8 @@ controller:
   revisionHistoryLimit: 3
   # -- Set statefulset podManagementPolicy, valid values are Parallel and OrderedReady (default).
   podManagementPolicy:
+  # -- Minimum number of seconds for which a newly created Pod should be ready without any of its containers crashing, for it to be considered available.
+  minReadySeconds:
 
 image:
   # -- image repository
@@ -61,6 +63,7 @@ autoscaling:
   maxReplicas:  # 100
   targetCPUUtilizationPercentage:  # 80
   targetMemoryUtilizationPercentage:  # 80
+  behavior: {}
 
 serviceAccount:
   # -- Specifies whether a service account should be created
