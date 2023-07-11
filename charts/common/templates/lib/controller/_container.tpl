@@ -47,9 +47,10 @@
         {{- if hasKey $value "value" }}
             {{- $value = $value.value -}}
         {{- else if hasKey $value "valueFrom" }}
-          {{- toYaml $value | nindent 6 }}
+          {{- tpl (toYaml $value) $ | nindent 6 }}
         {{- else }}
-          {{- dict "valueFrom" $value | toYaml | nindent 6 }}
+          {{- $value = dict "valueFrom" $value -}}
+          {{- tpl (toYaml $value) $ | nindent 6 }}
         {{- end }}
       {{- end }}
       {{- if not (kindIs "map" $value) }}
