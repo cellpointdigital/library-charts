@@ -1,6 +1,7 @@
 name: Lint and Test Charts
 
-on: pull_request
+on:
+  pull_request:
 
 jobs:
   lint-test:
@@ -39,4 +40,4 @@ jobs:
 #        if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        run: ct install --all --config .github/ct-install.yaml
+        run: ct install --config .github/ct-install.yaml

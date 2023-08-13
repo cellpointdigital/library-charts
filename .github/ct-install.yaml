@@ -3,5 +3,6 @@ excluded-charts:
 chart-repos:
   - lib=https://cellpointdigital.github.io/library-charts/
 chart-dirs:
-  - charts
-  - .
+  - test-app
+charts:
+  - test-app
