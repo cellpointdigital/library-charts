@@ -32,6 +32,22 @@ jobs:
             echo "::set-output name=changed::true"
           fi
 
+      - name: Prepare test application chart
+        run: |
+          export LIB_CHART_VERSION=$(helm show chart ./charts/common/ | grep version | awk '{print $2}')
+          echo "This library version: [$LIB_CHART_VERSION]"
+          echo "Pack library $LIB_CHART_VERSION locally..."
+          mkdir -p ./test-app/charts
+          helm package ./charts/common/ --destination ./test-app/charts
+          ls -alF ./test-app/charts
+          echo "====="
+          cat ./test-app/Chart.yaml
+          echo "===== Modify test-app chart to use library-chart $LIB_CHART_VERSION ====="
+          sed -i "s/\$LIB_CHART_VERSION/$LIB_CHART_VERSION/g" ./test-app/Chart.yaml
+          cat ./test-app/Chart.yaml
+          echo "====="
+          helm dependency list ./test-app/
+
       - name: Run chart-testing (lint)
         run: ct lint --all --config .github/ct-lint.yaml
 
@@ -40,4 +56,9 @@ jobs:
 #        if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/ct-install.yaml
+        run: |
+          helm dependency list ./test-app/
+          echo "===== helm template ====="
+          helm template ./test-app/ --values ./test-app/ci/test-app-values.yaml
+          echo "===== installing application to the cluster ====="
+          ct install --config .github/ct-install.yaml
