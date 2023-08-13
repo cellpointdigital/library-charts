@@ -442,6 +442,11 @@ topologySpreadConstraints: []
 # [[ref]](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
 tolerations: []
 
+# -- Specify pod restart policy
+# [[ref]](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy)
+# Options: Always, OnFailure, and Never
+restartPolicy: Always
+
 # -- Use hostAliases to add custom entries to /etc/hosts - mapping IP addresses to hostnames.
 # [[ref]](https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/)
 hostAliases: []
