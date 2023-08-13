@@ -36,20 +36,20 @@ jobs:
         run: |
           export LIB_CHART_VERSION=$(helm show chart ./charts/common/ | grep version | awk '{print $2}')
           echo "This library version: [$LIB_CHART_VERSION]"
-          echo "Pack library $LIB_CHART_VERSION locally..."
-          mkdir -p ./test-app/charts
-          helm package ./charts/common/ --destination ./test-app/charts
-          ls -alF ./test-app/charts
+          #echo "Pack library $LIB_CHART_VERSION locally..."
+          #mkdir -p ./test-app/charts
+          #helm package ./charts/common/ --destination ./test-app/charts
+          #ls -alF ./test-app/charts
           echo "====="
           cat ./test-app/Chart.yaml
           echo "===== Modify test-app chart to use library-chart $LIB_CHART_VERSION ====="
           sed -i "s/\$LIB_CHART_VERSION/$LIB_CHART_VERSION/g" ./test-app/Chart.yaml
           cat ./test-app/Chart.yaml
           echo "====="
-          helm dependency list ./test-app/
+          #helm dependency list ./test-app/
 
       - name: Run chart-testing (lint)
-        run: ct lint --all --helm-dependency-extra-args ["--skip-refresh"] --config .github/ct-lint.yaml
+        run: ct lint --all --check-version-increment --config .github/ct-lint.yaml
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.7.0
@@ -57,6 +57,8 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
+          ls -alF ./test-app/charts
+          echo "===== helm dependency list ====="
           helm dependency list ./test-app/
           echo "===== helm template ====="
           helm template ./test-app/ --values ./test-app/ci/test-app-values.yaml
