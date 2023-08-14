@@ -5,3 +5,12 @@ image:
 env:
   - name: PORT
     value: 8080
+  - name: APP_Version
+    value: "{{ .Chart.Version }}"
+  - name: Dependency_Version
+    value: "
+{{- range .Chart.Dependencies -}}
+{{- with fromJson (toJson .) -}}
+{{ .name }}:{{ .version }}
+{{- end }}
+{{- end }}"
