@@ -38,9 +38,9 @@ If release name contains chart name it will be used as a full name.
 {{/* Create the name of the ServiceAccount to use */}}
 {{- define "common.names.serviceAccountName" -}}
   {{- if .Values.serviceAccount.create -}}
-    {{- default (include "common.names.fullname" .) .Values.serviceAccount.name -}}
+    {{- default (include "common.names.fullname" .) (tpl .Values.serviceAccount.name $) -}}
   {{- else -}}
-    {{- default "default" .Values.serviceAccount.name -}}
+    {{- default "default" (tpl .Values.serviceAccount.name $) -}}
   {{- end -}}
 {{- end -}}
 
