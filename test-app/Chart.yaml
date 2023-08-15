@@ -3,8 +3,9 @@ annotations:
 apiVersion: v2
 dependencies:
   - name: common
-    repository: https://cellpointdigital.github.io/library-charts/
-    version: 0.1.5
+#    repository: https://cellpointdigital.github.io/library-charts/
+    repository: file://../charts/common
+    version: $LIB_CHART_VERSION
 name: test-app
 description: Test deployment to validate chart library
 version: 0.1.0
