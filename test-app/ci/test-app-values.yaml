@@ -14,3 +14,8 @@ env:
 {{ .name }}:{{ .version }}
 {{- end }}
 {{- end }}"
+serviceAccount:
+  create: true
+  name: '{{ .Chart.Name }}-sa'
+  annotations:
+    iam.gke.io/gcp-service-account: '{{ .Chart.Name }}-sa@local'
