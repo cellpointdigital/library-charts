@@ -91,6 +91,6 @@ tolerations:
     {{- toYaml . | nindent 2 }}
   {{- end }}
   {{- with .Values.restartPolicy }}
-restartPolicy: {{ .Values.restartPolicy }}
+restartPolicy: {{- with .Values.restartPolicy }}
   {{- end }}
 {{- end -}}
