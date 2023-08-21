@@ -29,4 +29,10 @@ spec:
   selector:
     matchLabels:
       {{- include "common.labels.selectorLabels" . | nindent 6 }}
+    matchExpressions:
+      - key: objectKind
+        operator: NotIn
+        values:
+          - job
+          - cronjob
 {{- end }}

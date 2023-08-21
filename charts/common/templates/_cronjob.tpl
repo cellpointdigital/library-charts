@@ -14,6 +14,7 @@ metadata:
       {{- toYaml . | nindent 4 }}
     {{- end }}
     chartName: {{ $.Chart.Name }}
+    objectKind: cronjob
   {{- with .Values.controller.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -41,6 +42,7 @@ spec:
           labels:
             {{- include "common.labels" . | nindent 12 }}
             name: {{ $cronJobName }}
+            objectKind: job
         spec:
           {{- include "common.cronjob.pod" . | nindent 10 }}
 
