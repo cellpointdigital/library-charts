@@ -19,3 +19,5 @@ serviceAccount:
   name: '{{ .Chart.Name }}-sa'
   annotations:
     iam.gke.io/gcp-service-account: '{{ .Chart.Name }}-sa@local'
+podDisruptionBudget:
+  minAvailable: 50%
