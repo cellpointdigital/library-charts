@@ -5,7 +5,7 @@ The PodDisruptionBudget object to be created.
   {{- $fullName := include "common.names.fullname" . -}}
   {{- $pdbName := $fullName -}}
   {{- $values := .Values.podDisruptionBudget -}}
----
+
 apiVersion: {{ template "common.capabilities.policy.apiVersion" . }}
 kind: PodDisruptionBudget
 metadata:
