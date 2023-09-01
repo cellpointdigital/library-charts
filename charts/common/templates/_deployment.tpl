@@ -19,7 +19,9 @@ metadata:
   {{- end }}
 spec:
   revisionHistoryLimit: {{ .Values.controller.revisionHistoryLimit }}
+  {{- if not .Values.autoscaling }}
   replicas: {{ .Values.controller.replicas }}
+  {{- end }}
   {{- $strategy := default "RollingUpdate" .Values.controller.strategy }}
   {{- if and (ne $strategy "Recreate") (ne $strategy "RollingUpdate") }}
     {{- fail (printf "Not a valid strategy type for Deployment (%s)" $strategy) }}
