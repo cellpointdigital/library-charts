@@ -2,7 +2,7 @@ apiVersion: v2
 name: common
 description: Function library for cellpointdigital charts
 type: library
-version: 0.1.14
+version: 0.1.15
 kubeVersion: ">=1.20.0-0"
 keywords:
   - common
