@@ -39,7 +39,6 @@ spec:
           averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
   {{- end }}
-
   {{- with .Values.autoscaling.behavior }}
   behavior:
     {{- toYaml . | nindent 4 }}
