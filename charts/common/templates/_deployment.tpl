@@ -19,7 +19,7 @@ metadata:
   {{- end }}
 spec:
   revisionHistoryLimit: {{ .Values.controller.revisionHistoryLimit }}
-  {{- if not .Values.autoscaling }}
+  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.controller.replicas }}
   {{- end }}
   {{- $strategy := default "RollingUpdate" .Values.controller.strategy }}
