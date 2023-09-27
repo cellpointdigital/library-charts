@@ -20,8 +20,10 @@ spec:
     name: {{ .Values.autoscaling.target | default $targetName }}
   minReplicas: {{ .Values.autoscaling.minReplicas | default 1 }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas | default 3 }}
-  {{- if or .Values.autoscaling.targetCPUUtilizationPercentage .Values.autoscaling.targetMemoryUtilizationPercentage }}
+  {{- with .Values.autoscaling.metrics }}
   metrics:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
     {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
     - type: Resource
       resource:
@@ -38,7 +40,6 @@ spec:
           type: Utilization
           averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
-  {{- end }}
   {{- with .Values.autoscaling.behavior }}
   behavior:
     {{- toYaml . | nindent 4 }}
