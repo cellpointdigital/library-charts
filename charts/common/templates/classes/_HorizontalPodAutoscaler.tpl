@@ -20,10 +20,10 @@ spec:
     name: {{ .Values.autoscaling.target | default $targetName }}
   minReplicas: {{ .Values.autoscaling.minReplicas | default 1 }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas | default 3 }}
-  {{- with .Values.autoscaling.metrics }}
   metrics:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- with .Values.autoscaling.metrics }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
     {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
     - type: Resource
       resource:
