@@ -36,6 +36,9 @@ spec:
   {{- with $cronjobValues.startingDeadlineSeconds }}
   startingDeadlineSeconds: {{ . }}
   {{- end }}
+  {{- with $cronjobValues.suspend }}
+  suspend: {{ . }}
+  {{- end }}
   jobTemplate:
     spec:
       completions: 1
