@@ -19,6 +19,7 @@ persistence:
 
 cronjob:
   enabled: true
+  suspend: false
   schedule: 0 */12 * * *
   image:
     repository: europe-west4-docker.pkg.dev/cpd-future/container-images/cronapp
