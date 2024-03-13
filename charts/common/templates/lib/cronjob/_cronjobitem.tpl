@@ -46,7 +46,6 @@ spec:
       template:
         metadata:
           labels:
-            {{- include "common.labels" . | nindent 12 }}
             name: {{ $cronjobValues.name }}
             objectKind: job
         spec:
