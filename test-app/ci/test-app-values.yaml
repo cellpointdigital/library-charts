@@ -21,3 +21,9 @@ serviceAccount:
     iam.gke.io/gcp-service-account: '{{ .Chart.Name }}-sa@local'
 podDisruptionBudget:
   minAvailable: 50%
+cronjobs:
+  job2:
+    schedule: 0 */2 * * *
+    image:
+      repository: ealen/echo-server
+      tag: latest
