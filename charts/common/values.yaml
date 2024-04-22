@@ -471,7 +471,6 @@ cronjob:
   # -- enable the cronjob.
   enabled: false
   concurrencyPolicy: Forbid
-  backoffLimit: 0
   startingDeadlineSeconds: 60
   failedJobsHistoryLimit: 5
   successfulJobsHistoryLimit: 5

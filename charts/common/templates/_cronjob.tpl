@@ -38,7 +38,9 @@ spec:
   {{- end }}
   jobTemplate:
     spec:
-      backoffLimit: {{ .Values.cronjob.backoffLimit }}
+      {{- with .Values.cronjob.backoffLimit }}
+      backoffLimit: {{ . }}
+      {{- end }}
       completions: 1
       parallelism: 1
       template:
