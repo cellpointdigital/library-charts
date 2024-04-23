@@ -22,9 +22,21 @@ serviceAccount:
 podDisruptionBudget:
   minAvailable: 50%
 cronjobs:
+  job1:
+    schedule: 0 1 * * *
+    backoffLimit: "3"
+    image:
+      repository: ealen/echo-server
+      tag: latest
   job2:
     schedule: 0 */2 * * *
     backoffLimit: "0"
+    image:
+      repository: ealen/echo-server
+      tag: latest
+  job3:
+    schedule: 0 */2 * * *
+    backoffLimit: 0  # if 0 specified without quotes, it is just ingnored
     image:
       repository: ealen/echo-server
       tag: latest
