@@ -24,6 +24,7 @@ podDisruptionBudget:
 cronjobs:
   job2:
     schedule: 0 */2 * * *
+    backoffLimit: 0
     image:
       repository: ealen/echo-server
       tag: latest
