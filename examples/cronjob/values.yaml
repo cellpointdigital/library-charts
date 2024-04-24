@@ -1,6 +1,6 @@
 image:
-  repository: registry.t.cpm.dev/library/com.cellpointdigital.cpdsbatch.server
-  tag: 1.0.999-SNAPSHOT
+  repository: europe-west1-docker.pkg.dev/prj-cp-mgmt-compute/container-images/cpds-batch
+  tag: 2
   pullPolicy: IfNotPresent
   env:
     - name: CLUSTER_NAME
@@ -34,8 +34,8 @@ cronjob:
 
   initContainers:
     initcontainer1:
-      repository: registry.t.cpm.dev/library/com.cellpointdigital.cpdsbatch.liquibase
-      tag: 1.0.999-SNAPSHOT
+      repository: europe-west1-docker.pkg.dev/prj-cp-mgmt-compute/container-images/cpds-batch_liquibase
+      tag: 2
       env:
         - name: DB_DBNAME
           value: cpdsbatch
