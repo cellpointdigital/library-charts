@@ -20,7 +20,7 @@ persistence:
 cronjob:
   enabled: true
   suspend: false
-  backoffLimit: "6"  # specify only if required
+#  backoffLimit: "6"  # specify only if required
   schedule: 0 */12 * * *
   image:
     repository: europe-west4-docker.pkg.dev/cpd-future/container-images/cronapp
