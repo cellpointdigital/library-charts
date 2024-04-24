@@ -14,7 +14,7 @@ controller:
   annotations: {}
   # -- Set labels on the deployment/statefulset/daemonset
   labels: {}
-  # -- Number of desired pods
+  # -- Number of desired pods. Ignored if autoscaling is enabled!
   replicas: 1
   # -- Set the controller upgrade strategy
   # For Deployments, valid values are Recreate (default) and RollingUpdate.
