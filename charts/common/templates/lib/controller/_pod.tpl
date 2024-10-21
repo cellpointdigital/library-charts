@@ -80,7 +80,7 @@ nodeSelector:
   {{- end }}
   {{- with .Values.affinity }}
 affinity:
-    {{- toYaml . | nindent 2 }}
+    {{- tpl (toYaml .) $ | nindent 2 }}
   {{- end }}
   {{- with .Values.topologySpreadConstraints }}
 topologySpreadConstraints:
