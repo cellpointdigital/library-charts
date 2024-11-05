@@ -22,7 +22,7 @@ spec:
   maxReplicas: {{ .Values.autoscaling.maxReplicas | default 3 }}
   metrics:
     {{- with .Values.autoscaling.metrics }}
-      {{- toYaml . | nindent 4 }}
+      {{- tpl (toYaml .) $ | nindent 4 }}
     {{- end }}
     {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
     - type: Resource
