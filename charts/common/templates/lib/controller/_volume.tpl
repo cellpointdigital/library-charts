@@ -65,6 +65,6 @@ Volumes included by the controller.
 - name: {{ include "common.names.fullname" . }}-scripts
   configMap:
     name: {{ include "common.names.fullname" . }}-scripts-cm
-    defaultMode: "0755"
+    defaultMode: 0755
 {{- end }}
 {{- end }}
