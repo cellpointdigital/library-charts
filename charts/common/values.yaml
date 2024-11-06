@@ -499,5 +499,5 @@ preStopHook:
   enabled: false
   scriptName: check_open_connections_before_termination.sh
   scriptsMountPath: /scripts
-  #tcpPort: 8080  # targetPort of primary service is used by default
-  retries: 37 # 2s each
+#  tcpPort: 8080  # targetPort of primary service is used by default
+  retries: 37  # 2s each
