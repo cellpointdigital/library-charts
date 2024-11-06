@@ -493,3 +493,11 @@ cronjob:
   # -- Specify any initContainers for cronjob here as dictionary items. Each initContainer should have its own key.
   # The dictionary item key will determine the order. Helm templates can be used.
   initContainers: {}
+
+# -- Specify if main container should use pre-stop hook to wait until all ESTABLISHED TCP connections are closed
+preStopHook:
+  enabled: false
+  scriptName: check_open_connections_before_termination.sh
+  scriptsMountPath: /scripts
+#  tcpPort: 8080  # targetPort of primary service is used by default
+  retries: 37  # 2s each
