@@ -2,6 +2,19 @@ apiVersion: v1
 entries:
   common:
   - apiVersion: v2
+    created: "2024-11-07T08:50:53.446330634Z"
+    description: Function library for cellpointdigital charts
+    digest: bc0cbe6b86fedc302d2a752369a610751d9c4633d76d08c662435b55937e37cd
+    home: https://github.com/cellpointdigital/library-charts/tree/main/charts/common
+    keywords:
+    - common
+    kubeVersion: '>=1.20.0-0'
+    name: common
+    type: library
+    urls:
+    - https://github.com/cellpointdigital/library-charts/releases/download/common-0.1.27/common-0.1.27.tgz
+    version: 0.1.27
+  - apiVersion: v2
     created: "2024-11-07T08:41:00.701208701Z"
     description: Function library for cellpointdigital charts
     digest: 14068ec86e3302140b595207db9bd5ad0f02d02109d155cc320986538e57f4ba
@@ -352,4 +365,4 @@ entries:
     urls:
     - https://github.com/cellpointdigital/library-charts/releases/download/common-0.1.0/common-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-07T08:41:00.701441776Z"
+generated: "2024-11-07T08:50:53.446570504Z"
