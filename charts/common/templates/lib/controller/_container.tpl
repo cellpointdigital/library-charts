@@ -23,6 +23,12 @@
   securityContext:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- if .Values.preStopHook.enabled }}
+  lifecycle:
+    preStop:
+      exec:
+        command: ["sh", "-c", "{{ .Values.preStopHook.scriptsMountPath }}/{{ .Values.preStopHook.scriptName }} > /proc/1/fd/1"]
+  {{- end }}
   {{- with .Values.lifecycle }}
   lifecycle:
     {{- toYaml . | nindent 4 }}
