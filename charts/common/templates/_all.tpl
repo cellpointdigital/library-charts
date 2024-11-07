@@ -52,7 +52,7 @@ Main entrypoint for the common library chart. It will render all underlying temp
     {{ include "common.controller.scripts" .  | nindent 0 }}
   {{- end }}
 
-  {{- if .Values.twingate }}
+  {{- if .Values.twingate.enabled }}
     {{ include "common.twingate" .  | nindent 0 }}
   {{- end }}
 

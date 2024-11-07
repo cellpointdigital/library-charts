@@ -2,7 +2,6 @@
 This template defines the TwingateResource and TwingateResourceAccess objects for Twingate integration.
 */}}
 {{- define "common.twingate" }}
-{{- if .Values.twingate.enabled }}
 ---
 apiVersion: twingate.com/v1beta
 kind: TwingateResource
@@ -46,5 +45,4 @@ spec:
     type: group
     name: {{ .Values.twingate.groupName | default .Release.Namespace }}
   {{- end }}
-{{- end }}
 {{- end }}
