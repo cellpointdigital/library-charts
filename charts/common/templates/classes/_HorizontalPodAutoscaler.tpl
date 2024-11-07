@@ -40,6 +40,24 @@ spec:
           type: Utilization
           averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
+    {{- if .Values.autoscaling.targetContainerCPUUtilizationPercentage }}
+    - type: ContainerResource
+      containerResource:
+        name: cpu
+        container: {{ include "common.names.fullname" . }}
+        target:
+          type: Utilization
+          averageUtilization:  {{ .Values.autoscaling.targetContainerCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.autoscaling.targetContainerMemoryUtilizationPercentage }}
+    - type: ContainerResource
+      containerResource:
+        name: memory
+        container: {{ include "common.names.fullname" . }}
+        target:
+          type: Utilization
+          averageUtilization:  {{ .Values.autoscaling.targetContainerMemoryUtilizationPercentage }}
+    {{- end }}
   {{- with .Values.autoscaling.behavior }}
   behavior:
     {{- toYaml . | nindent 4 }}
