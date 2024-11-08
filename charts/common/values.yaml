@@ -499,10 +499,12 @@ cronjob:
   initContainers: {}
 
 # -- Specify if main container should use pre-stop hook to wait until all ESTABLISHED TCP connections are closed
+# NB: "gracePeriodSeconds" must be greater then hook script max execution time (e.g. 90s)
 preStopHook:
   enabled: false
   scriptName: check_open_connections_before_termination.sh
-  scriptsMountPath: /scripts
+  redirectOutputCommand:  # '> /proc/1/fd/1' works only for root user, fails with 'permission denied' otherwise. For non-root redirect to mounted file.
+  scriptsMountPath: /devops-scripts
 #  tcpPort: 8080  # targetPort of primary service is used by default
   retries: 37  # 2s each
 
