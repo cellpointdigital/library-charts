@@ -27,7 +27,7 @@
   lifecycle:
     preStop:
       exec:
-        command: ["sh", "-c", "{{ .Values.preStopHook.scriptsMountPath }}/{{ .Values.preStopHook.scriptName }} > /proc/1/fd/1"]
+        command: ["sh", "-c", "{{ .Values.preStopHook.scriptsMountPath }}/{{ .Values.preStopHook.scriptName }} {{ .Values.preStopHook.redirectOutputCommand }}"]
   {{- end }}
   {{- with .Values.lifecycle }}
   lifecycle:
