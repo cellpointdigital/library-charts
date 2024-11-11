@@ -2,12 +2,11 @@
 Template for single cronjob. Kept for compatibility. "common.cronjobs" can be used instead.
 */}}
 {{- define "common.cronjob" }}
-{{- $cronJobName := include "common.names.fullname" . -}}
 ---
 apiVersion: {{ template "common.capabilities.cronjob.apiVersion" . }}
 kind: CronJob
 metadata:
-  name: {{ $cronJobName }}
+  name: {{ include "common.names.fullname" . }}-cronjob
   labels:
     {{- include "common.labels" . | nindent 4 }}
     {{- with .Values.controller.labels }}
@@ -46,7 +45,7 @@ spec:
       template:
         metadata:
           labels:
-            name: {{ $cronJobName }}
+            name: {{ include "common.names.fullname" . }}-cronjob
             objectKind: job
         spec:
           {{- include "common.cronjob.pod" . | nindent 10 }}
