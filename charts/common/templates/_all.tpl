@@ -48,7 +48,7 @@ Main entrypoint for the common library chart. It will render all underlying temp
     {{ include "common.pdb" .  | nindent 0 }}
   {{- end }}
 
-  {{- if .Values.preStopHook.enabled }}
+  {{- if and (hasKey .Values "preStopHook") (.Values.preStopHook.enabled) }}
     {{ include "common.controller.scripts" .  | nindent 0 }}
   {{- end }}
 
