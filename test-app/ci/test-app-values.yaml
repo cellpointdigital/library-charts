@@ -41,4 +41,5 @@ cronjobs:
       repository: ealen/echo-server
       tag: latest
 preStopHook:
-  enabled: true
+  someKey: true
+#  enabled: true
