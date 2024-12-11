@@ -23,7 +23,8 @@
   securityContext:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- if and (hasKey .Values "preStopHook") (and (hasKey .Values.preStopHook "enabled") (.Values.preStopHook.enabled)) }}
+  {{- $psh := .Values.preStopHook | default dict }}
+  {{- if $psh.enabled }}
   lifecycle:
     preStop:
       exec:
