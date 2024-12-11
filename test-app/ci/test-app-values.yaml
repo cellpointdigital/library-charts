@@ -40,4 +40,4 @@ cronjobs:
     image:
       repository: ealen/echo-server
       tag: latest
-preStopHook:
+preStopHook:  # this empty section is provided on-purpose to test if it is processed correctly

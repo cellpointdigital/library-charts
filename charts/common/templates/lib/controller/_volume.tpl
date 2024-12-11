@@ -61,7 +61,7 @@ Volumes included by the controller.
   {{- end }}
 {{- end }}
 {{- end }}
-{{- if and (hasKey .Values "preStopHook") (.Values.preStopHook.enabled) }}
+{{- if (.Values.preStopHook | default dict).enabled }}
 - name: {{ include "common.names.fullname" . }}-scripts
   configMap:
     name: {{ include "common.names.fullname" . }}-scripts-cm
