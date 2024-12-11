@@ -53,7 +53,7 @@
       {{- end }}
     {{- end }}
   {{- end }}
-  {{- if .Values.preStopHook.enabled }}
+  {{- if (.Values.preStopHook | default dict).enabled }}
 - name: {{ include "common.names.fullname" . }}-scripts
   mountPath: {{ .Values.preStopHook.scriptsMountPath }}/
   {{- end }}
