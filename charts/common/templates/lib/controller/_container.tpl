@@ -23,7 +23,7 @@
   securityContext:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- if and (hasKey .Values "preStopHook") (.Values.preStopHook.enabled) }}
+  {{- if and (hasKey .Values "preStopHook") (and (hasKey .Values.preStopHook "enabled") (.Values.preStopHook.enabled)) }}
   lifecycle:
     preStop:
       exec:
