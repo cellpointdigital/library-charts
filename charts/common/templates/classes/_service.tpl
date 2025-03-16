@@ -30,8 +30,8 @@ metadata:
   {{- if eq ( $primaryPort.protocol | default "" ) "HTTPS" }}
     traefik.ingress.kubernetes.io/service.serversscheme: https
   {{- end }}
-  {{- with $values.annotations }}
-    {{ toYaml . | nindent 4 }}
+  {{- with $values.annotations -}}
+    {{ tpl (toYaml .) $ | nindent 4 }}
   {{- end }}
 spec:
   {{- if (or (eq $svcType "ClusterIP") (empty $svcType)) }}
