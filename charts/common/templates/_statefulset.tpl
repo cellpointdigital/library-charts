@@ -7,7 +7,7 @@ within the common library.
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "common.names.fullname" . }}
+  name: {{ include "common.names.serviceName" . }}
   labels:
     {{- include "common.labels" . | nindent 4 }}
     {{- with .Values.controller.labels }}
@@ -37,7 +37,7 @@ spec:
   selector:
     matchLabels:
       {{- include "common.labels.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "common.names.fullname" . }}
+  serviceName: {{ include "common.names.serviceName" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}

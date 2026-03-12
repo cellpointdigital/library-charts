@@ -10,7 +10,7 @@ within the common library.
   {{- end -}}
 {{ end -}}
 
-{{- $serviceName := include "common.names.fullname" . -}}
+{{- $serviceName := include "common.names.serviceName" . -}}
 {{- if and (hasKey $values "nameOverride") $values.nameOverride -}}
   {{- $serviceName = printf "%v-%v" $serviceName $values.nameOverride -}}
 {{ end -}}
