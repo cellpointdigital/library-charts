@@ -30,24 +30,6 @@ If release name contains chart name it will be used as a full name.
   {{- trunc 63 $name | trimSuffix "-" -}}
 {{- end -}}
 
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
-*/}}
-{{- define "common.names.serviceName" -}}
-  {{- $name := include "common.names.name" . -}}
-  {{- $globalFullNameOverride := "" -}}
-  {{- if hasKey .Values "global" -}}
-    {{- $globalFullNameOverride = (default $globalFullNameOverride .Values.global.fullnameOverride) -}}
-  {{- end -}}
-  {{- if or .Values.fullnameOverride $globalFullNameOverride -}}
-    {{- $name = default .Values.fullnameOverride $globalFullNameOverride -}}
-  {{- end -}}
-  {{- trunc 63 $name | trimSuffix "-" -}}
-{{- end -}}
-
-
 {{/* Create chart name and version as used by the chart label */}}
 {{- define "common.names.chart" -}}
   {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
