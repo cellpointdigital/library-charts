@@ -350,6 +350,118 @@ ingress:
     #    hosts:
     #      - chart-example.local
 
+# -- Configure HealthCheckPolicies for the chart here (GKE Gateway API).
+# Attaches to a Service to configure backend health checks on GCP load balancers.
+# Additional policies can be added by adding a dictionary key similar to the 'main' entry.
+# @default -- See below
+healthCheckPolicy:
+  main:
+    # -- Enables or disables the HealthCheckPolicy
+    enabled: false
+
+    # -- Make this the primary HealthCheckPolicy.
+    primary: true
+
+    # -- Override the name suffix that is used for this HealthCheckPolicy.
+    nameOverride:
+
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+
+    # -- Provide additional labels which may be required.
+    labels: {}
+
+    # -- The resource this policy attaches to.
+    # Defaults to the primary Service when omitted.
+    targetRef:
+      # -- API group of the target resource. Empty string means core API group (Services).
+      group: ""
+      # -- Kind of the target resource. Usually Service.
+      kind: Service
+      # -- Name of the target resource. Helm template can be passed.
+      # Defaults to the primary service name when omitted.
+      name:
+
+    # -- Health check parameters.
+    default:
+      # -- How often (in seconds) to send a health check.
+      checkIntervalSec: 15
+      # -- How long (in seconds) to wait before claiming failure.
+      timeoutSec: 15
+      # -- Number of consecutive successes required to mark a backend healthy.
+      healthyThreshold: 1
+      # -- Number of consecutive failures required to mark a backend unhealthy.
+      unhealthyThreshold: 2
+      logConfig:
+        # -- Enable logging of health check results.
+        enabled: false
+      config:
+        # -- Health check protocol. Valid values: HTTP, HTTPS, HTTP2, GRPC, TCP.
+        type: HTTP
+        httpHealthCheck:
+          # -- Port to send the health check to.
+          # Defaults to the primary service port when omitted.
+          port:
+          # -- Request path for the health check.
+          requestPath: /healthz
+          # -- Optional Host header value.
+          host:
+
+# -- Configure HTTPRoutes for the chart here (Gateway API, intended to replace Ingress).
+# Additional httproutes can be added by adding a dictionary key similar to the 'main' entry.
+# @default -- See below
+httproute:
+  main:
+    # -- Enables or disables the HTTPRoute
+    enabled: false
+
+    # -- Make this the primary HTTPRoute.
+    # If there is more than 1 httproute, make sure that only 1 is marked as primary.
+    primary: true
+
+    # -- Override the name suffix that is used for this HTTPRoute.
+    nameOverride:
+
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+
+    # -- Provide additional labels which may be required.
+    labels: {}
+
+    # -- Reference the Gateway(s) this HTTPRoute should attach to.
+    # Helm templates can be used in name and namespace fields.
+    # @default -- []
+    parentRefs: []
+    #  - name: my-gateway
+    #    namespace: gateway-system
+    #    sectionName: https   # optional: target a specific listener by name
+
+    # -- Hostnames that this HTTPRoute should match.
+    # Hostnames given in HTTPRoute must match hostnames in parentRefs' Listener
+    # "*" is allowed
+    # Helm templates can be passed.
+    hostnames: []
+    #  - chart-example.local
+    #  - '*.chart-example.local'
+
+    # -- Routing rules. Each rule can specify matches, filters and backendRefs.
+    # If matches is omitted the default is to match all requests.
+    # If backendRefs is omitted the primary service is used automatically.
+    # @default -- See below
+    rules:
+      - matches:
+          # -- path / header / method match conditions.
+          - path:
+              # -- PathPrefix, Exact or RegularExpression
+              type: PathPrefix
+              value: /
+        # -- Override which backend(s) receive traffic for this rule.
+        # Omit to route to the primary service on its primary port.
+        backendRefs: []
+        #  - name: my-service
+        #    port: 8080
+        #    weight: 100
+
 # -- Configure persistence for the chart here.
 # Additional items can be added by adding a dictionary key similar to the 'config' key.
 # [[ref]](http://docs.k8s-at-home.com/our-helm-charts/common-library-storage)

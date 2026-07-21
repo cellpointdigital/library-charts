@@ -19,6 +19,28 @@
 {{- end -}}
 
 
+{{/* Return the appropriate apiVersion for HTTPRoute objects */}}
+{{- define "common.capabilities.httproute.apiVersion" -}}
+  {{- if .Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1/HTTPRoute" -}}
+    {{- print "gateway.networking.k8s.io/v1" -}}
+  {{- else if .Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1beta1/HTTPRoute" -}}
+    {{- print "gateway.networking.k8s.io/v1beta1" -}}
+  {{- else -}}
+    {{- print "gateway.networking.k8s.io/v1" -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Return the appropriate apiVersion for HealthCheckPolicy objects */}}
+{{- define "common.capabilities.healthcheckpolicy.apiVersion" -}}
+  {{- if .Capabilities.APIVersions.Has "networking.gke.io/v1/HealthCheckPolicy" -}}
+    {{- print "networking.gke.io/v1" -}}
+  {{- else if .Capabilities.APIVersions.Has "networking.gke.io/v1beta1/HealthCheckPolicy" -}}
+    {{- print "networking.gke.io/v1beta1" -}}
+  {{- else -}}
+    {{- print "networking.gke.io/v1" -}}
+  {{- end -}}
+{{- end -}}
+
 {{/* Return the appropriate apiVersion for HorizontalPodAutoscaler objects */}}
 {{- define "common.capabilities.autoscaling.apiVersion" -}}
   {{- print "autoscaling/v2" -}}
