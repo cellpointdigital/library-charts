@@ -1,0 +1,74 @@
+# example of httproute and healthCheckPolicy config
+image:
+  repository: ealen/echo-server
+  tag: latest
+env:
+  - name: PORT
+    value: 8080
+  - name: APP_Version
+    value: "{{ .Chart.Version }}"
+  - name: Dependency_Version
+    value: "
+{{- range .Chart.Dependencies -}}
+{{- with fromJson (toJson .) -}}
+{{ .name }}:{{ .version }}
+{{- end }}
+{{- end }}"
+serviceAccount:
+  create: true
+  name: '{{ .Chart.Name }}-sa'
+  annotations:
+    iam.gke.io/gcp-service-account: '{{ .Chart.Name }}-sa@local'
+podDisruptionBudget:
+  minAvailable: 50%
+
+httproute:
+  main:
+    enabled: true
+    primary: true
+    parentRefs: # Attach the HTTPRoute to existing Gateway
+      - name: my-https
+        namespace: sbox
+    hostnames: # Hostnames given in HTTPRoute must match hostnames in parentRefs' Listener
+      - chart-example.local
+      - '*.chart-example.local'
+    rules:
+      - matches:
+        - path:
+            type: PathPrefix
+            value: "/"
+        backendRefs:
+          - name: '{{ .Release.Name }}-{{ .Chart.Name }}'
+            port: 8080
+  second:
+    enabled: true
+    parentRefs:
+      - name: my-https
+        namespace: sbox
+    hostnames:
+      - 'second.chart-example.local'
+    rules:
+      - matches:
+        - path:
+            type: PathPrefix
+            value: "/echo"
+        # backendRefs:
+        #   - name: '{{ .Release.Name }}-{{ .Chart.Name }}'
+        #     port: 8080
+  third-minimal:
+    enabled: true
+    parentRefs:
+      - name: my-https
+        namespace: sbox
+    hostnames:
+      - 'third.chart-example.local'
+
+healthCheckPolicy:
+  main:
+    enabled: true
+    default:
+      config:
+        type: HTTP
+        httpHealthCheck:
+          requestPath: /health
+          # port: omitted → uses primary service port automatically
