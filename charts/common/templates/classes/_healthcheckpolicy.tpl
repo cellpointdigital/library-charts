@@ -20,16 +20,13 @@ attaches to a Service and configures backend health checks on GCP load balancers
   {{- end -}}
 
   {{/* Resolve the target service name */}}
+  {{- $primaryService := get .Values.service (include "common.service.primary" .) -}}
   {{- $targetName := $fullName -}}
-  {{- if $values.targetRef -}}
-    {{- if $values.targetRef.name -}}
-      {{- $targetName = tpl $values.targetRef.name $ -}}
-    {{- end -}}
-  {{- else -}}
-    {{- $primaryService := get .Values.service (include "common.service.primary" .) -}}
-    {{- if and (hasKey $primaryService "nameOverride") $primaryService.nameOverride -}}
-      {{- $targetName = printf "%v-%v" $fullName $primaryService.nameOverride -}}
-    {{- end -}}
+  {{- if and (hasKey $primaryService "nameOverride") $primaryService.nameOverride -}}
+    {{- $targetName = printf "%v-%v" $fullName $primaryService.nameOverride -}}
+  {{- end -}}
+  {{- if and $values.targetRef $values.targetRef.name -}}
+    {{- $targetName = tpl $values.targetRef.name $ -}}
   {{- end -}}
 
   {{- $targetKind := "Service" -}}
