@@ -438,7 +438,7 @@ httproute:
 
     # -- Hostnames that this HTTPRoute should match.
     # Hostnames given in HTTPRoute must match hostnames in parentRefs' Listener
-    # "*" works for nested subdomains also, even multiple levels
+    # "*" is allowed
     # Helm templates can be passed.
     hostnames: []
     #  - chart-example.local
