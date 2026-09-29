@@ -113,5 +113,6 @@ spec:
   {{- $primaryService := get .Values.service (include "common.service.primary" .) -}}
   {{- $primaryPortName := include "common.classes.service.ports.primary" (dict "values" $primaryService) -}}
   {{- $primaryPort := get $primaryService.ports $primaryPortName -}}
-  {{- $primaryPort.targetPort | default $primaryPortName -}}
+  {{/* HealthCheckPolicy requires a numeric port; targetPort defaults to the (non-numeric) port name, so fall back to the service port number instead */}}
+  {{- $primaryPort.targetPort | default $primaryPort.port -}}
 {{- end -}}

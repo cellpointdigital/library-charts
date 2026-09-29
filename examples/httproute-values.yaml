@@ -73,7 +73,7 @@ healthCheckPolicy:
         type: HTTP
         httpHealthCheck:
           requestPath: /health
-          # port: omitted → uses the primary service port (e.g. 8080) automatically
+          # port: omitted → uses the primary service targetPort  (e.g. 8080) automatically
   admin:
     enabled: true
     targetRef:
@@ -86,23 +86,23 @@ healthCheckPolicy:
           port: 9090
           requestPath: /admin/health
 
-# Other healthCheckPolicy examples
-healthCheckPolicy:
-  tcp:
-    enabled: true
-    default:
-      config:
-        type: TCP
-        tcpHealthCheck:
-          port: 8080 # <--- port on the pod, not the service port
-healthCheckPolicy:
-  tcp-default-port:
-    enabled: true
-    default:
-      config:
-        type: TCP
-        # port: omitted → uses targetPort from the primary service
-healthCheckPolicy:
-  minimal:
-    # Produces the default HTTP configuration for "/healthz" on the Service targetPort.
-    enabled: true
+## Other healthCheckPolicy examples. Commented out to avoid conflicts with the main examples.
+# healthCheckPolicy:
+#   tcp:
+#     enabled: true
+#     default:
+#       config:
+#         type: TCP
+#         tcpHealthCheck:
+#           port: 8080 # <--- port on the pod, not the service port
+# healthCheckPolicy:
+#   tcp-default-port:
+#     enabled: true
+#     default:
+#       config:
+#         type: TCP
+#         # port: omitted → uses targetPort from the primary service
+# healthCheckPolicy:
+#   minimal:
+#     # Produces the default HTTP configuration for "/healthz" on the Service targetPort.
+#     enabled: true

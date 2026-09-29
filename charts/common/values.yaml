@@ -400,7 +400,7 @@ healthCheckPolicy:
         type: HTTP
         httpHealthCheck:
           # -- Port to send the health check to.
-          # Defaults to the primary service's targetPort when omitted (falling back to the port name if targetPort is unset).
+          # Defaults to the primary service's targetPort when omitted (falling back to the service port number if targetPort is unset).
           port:
           # -- Request path for the health check.
           requestPath: /healthz
