@@ -108,9 +108,10 @@ spec:
       {{- end }}
 {{ end }}
 
-{{/* Helper: resolve the primary service port for use as the default health check port */}}
+{{/* Helper: resolve the primary service's targetPort for use as the default health check port */}}
 {{- define "common.healthcheckpolicy.defaultPort" -}}
   {{- $primaryService := get .Values.service (include "common.service.primary" .) -}}
-  {{- $primaryPort := get $primaryService.ports (include "common.classes.service.ports.primary" (dict "values" $primaryService)) -}}
-  {{- $primaryPort.port -}}
+  {{- $primaryPortName := include "common.classes.service.ports.primary" (dict "values" $primaryService) -}}
+  {{- $primaryPort := get $primaryService.ports $primaryPortName -}}
+  {{- $primaryPort.targetPort | default $primaryPortName -}}
 {{- end -}}
