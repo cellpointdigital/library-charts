@@ -86,7 +86,8 @@ healthCheckPolicy:
           port: 9090
           requestPath: /admin/health
 
-# Another healthCheckPolicy examples
+# Other healthCheckPolicy examples
+healthCheckPolicy:
   tcp:
     enabled: true
     default:
@@ -94,12 +95,14 @@ healthCheckPolicy:
         type: TCP
         tcpHealthCheck:
           port: 8080 # <--- port on the pod, not the service port
+healthCheckPolicy:
   tcp-default-port:
     enabled: true
     default:
       config:
         type: TCP
         # port: omitted → uses targetPort from the primary service
+healthCheckPolicy:
   minimal:
-    #Produces default config with HTTP to "/healthz" on svc targetPort
+    # Produces the default HTTP configuration for "/healthz" on the Service targetPort.
     enabled: true
