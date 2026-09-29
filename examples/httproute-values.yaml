@@ -63,12 +63,46 @@ httproute:
     hostnames:
       - 'third.chart-example.local'
 
+# Example of multiple HealthCheckPolicy objects, each attached to a different Service (by name) and checking a different port/path.
 healthCheckPolicy:
   main:
     enabled: true
+    primary: true
     default:
       config:
         type: HTTP
         httpHealthCheck:
           requestPath: /health
-          # port: omitted → uses primary service port automatically
+          # port: omitted → uses the primary service targetPort  (e.g. 8080) automatically
+  admin:
+    enabled: true
+    targetRef:
+      # Points this policy at the '<release>-<chart>-admin' Service instead of the primary one
+      name: '{{ .Release.Name }}-{{ .Chart.Name }}-admin'
+    default:
+      config:
+        type: HTTP
+        httpHealthCheck:
+          port: 9090
+          requestPath: /admin/health
+
+## Other healthCheckPolicy examples. Commented out to avoid conflicts with the main examples.
+# healthCheckPolicy:
+#   tcp:
+#     enabled: true
+#     default:
+#       config:
+#         type: TCP
+#         tcpHealthCheck:
+#           port: 8080 # <--- port on the pod, not the service port
+# healthCheckPolicy:
+#   tcp-default-port:
+#     enabled: true
+#     default:
+#       config:
+#         type: TCP
+#         # port: omitted → uses targetPort from the primary service
+# healthCheckPolicy:
+#   minimal:
+#     # Produces the default HTTP configuration for "/healthz" on the Service targetPort.
+#     enabled: true
