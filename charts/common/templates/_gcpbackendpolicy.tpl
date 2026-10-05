@@ -32,7 +32,7 @@
   {{- end -}}
 
   {{- if not $result -}}
-    {{- $result = keys $enabled | first -}}
+    {{- $result = keys $enabled | sortAlpha | first -}}
   {{- end -}}
   {{- $result -}}
 {{- end -}}

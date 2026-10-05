@@ -33,7 +33,7 @@
   {{- end -}}
 
   {{- if not $result -}}
-    {{- $result = keys $enabledIngresses | first -}}
+    {{- $result = keys $enabledIngresses | sortAlpha | first -}}
   {{- end -}}
   {{- $result -}}
 {{- end -}}

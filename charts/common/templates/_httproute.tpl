@@ -33,7 +33,7 @@
   {{- end -}}
 
   {{- if not $result -}}
-    {{- $result = keys $enabledHTTPRoutes | first -}}
+    {{- $result = keys $enabledHTTPRoutes | sortAlpha | first -}}
   {{- end -}}
   {{- $result -}}
 {{- end -}}
