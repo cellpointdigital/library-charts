@@ -407,6 +407,87 @@ healthCheckPolicy:
           # -- Optional Host header value.
           host:
 
+# -- Configure GCPBackendPolicies for the chart here (GKE Gateway API).
+# Attaches to a Service to configure backend-level load balancer behavior,
+# such as timeouts, connection draining, access logging, session affinity,
+# Cloud Armor security policies and IAP.
+# Additional policies can be added by adding a dictionary key similar to the 'main' entry.
+# @default -- See below
+gcpBackendPolicy:
+  main:
+    # -- Enables or disables the GCPBackendPolicy
+    enabled: false
+
+    # -- Make this the primary GCPBackendPolicy.
+    primary: true
+
+    # -- Override the name suffix that is used for this GCPBackendPolicy.
+    nameOverride:
+
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+
+    # -- Provide additional labels which may be required.
+    labels: {}
+
+    # -- The resource this policy attaches to.
+    # Defaults to the primary Service when omitted.
+    targetRef:
+      # -- API group of the target resource. Empty string means core API group (Services).
+      group: ""
+      # -- Kind of the target resource. Usually Service.
+      kind: Service
+      # -- Name of the target resource. Helm template can be passed.
+      # Defaults to the primary service name when omitted.
+      name:
+
+    # -- Backend policy parameters. All fields are optional and are omitted from the
+    # rendered policy unless set, keeping the GCP load balancer default behavior.
+    default:
+      # -- Backend service timeout, in seconds. Defaults to 30 when omitted.
+      timeoutSec:
+      # -- Connection draining settings. Leave as {} to omit (disables connection draining).
+      # @default -- {}
+      connectionDraining: {}
+      #  drainingTimeoutSec: 60 # 0-3600, a value of 0 disables connection draining.
+
+      # -- Access logging settings. Leave as {} to omit (GCP logs all requests by default).
+      # @default -- {}
+      logging: {}
+      #  enabled: true
+      #  sampleRate: 500000       # 0-1000000, proportion of requests to log (1000000 = 100%)
+      #  optionalMode: CUSTOM     # CUSTOM or EXCLUDE_ALL_OPTIONAL
+      #  optionalFields:
+      #    - tls.cipher
+      #    - orcaLoadReport.cpu_utilization
+
+      # -- Session affinity settings. Leave as {} to omit (no session affinity).
+      # @default -- {}
+      sessionAffinity: {}
+      #  type: CLIENT_IP         # CLIENT_IP, GENERATED_COOKIE or NONE
+      #  cookieTtlSec: 50        # only used when type is GENERATED_COOKIE
+
+      # -- Name of a Cloud Armor backend security policy to attach.
+      securityPolicy:
+
+      # -- Identity-Aware Proxy (IAP) settings. Leave as {} to omit (IAP disabled).
+      # @default -- {}
+      iap: {}
+      #  enabled: true
+      #  oauth2ClientSecret:
+      #    name: my-iap-secret   # Secret containing the OAuth client_id/client_secret
+      #  clientID: "441323991697-example.apps.googleusercontent.com"
+
+      # -- Maximum requests per second per Pod endpoint, used for traffic-based autoscaling.
+      maxRatePerEndpoint:
+
+      # -- Per-location backend configuration (balancing mode, rate limits, custom metrics).
+      # @default -- []
+      backends: []
+      #  - location: "*"
+      #    balancingMode: RATE
+      #    maxRatePerEndpoint: 9000
+
 # -- Configure HTTPRoutes for the chart here (Gateway API, intended to replace Ingress).
 # Additional httproutes can be added by adding a dictionary key similar to the 'main' entry.
 # @default -- See below
