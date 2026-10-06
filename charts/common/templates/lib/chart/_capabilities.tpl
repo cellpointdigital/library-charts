@@ -41,6 +41,17 @@
   {{- end -}}
 {{- end -}}
 
+{{/* Return the appropriate apiVersion for GCPBackendPolicy objects */}}
+{{- define "common.capabilities.gcpbackendpolicy.apiVersion" -}}
+  {{- if .Capabilities.APIVersions.Has "networking.gke.io/v1/GCPBackendPolicy" -}}
+    {{- print "networking.gke.io/v1" -}}
+  {{- else if .Capabilities.APIVersions.Has "networking.gke.io/v1beta1/GCPBackendPolicy" -}}
+    {{- print "networking.gke.io/v1beta1" -}}
+  {{- else -}}
+    {{- print "networking.gke.io/v1" -}}
+  {{- end -}}
+{{- end -}}
+
 {{/* Return the appropriate apiVersion for HorizontalPodAutoscaler objects */}}
 {{- define "common.capabilities.autoscaling.apiVersion" -}}
   {{- print "autoscaling/v2" -}}

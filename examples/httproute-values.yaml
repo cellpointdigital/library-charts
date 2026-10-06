@@ -1,4 +1,4 @@
-# example of httproute and healthCheckPolicy config
+# example of httproute, healthCheckPolicy and gcpBackendPolicy config
 image:
   repository: ealen/echo-server
   tag: latest
@@ -106,3 +106,57 @@ healthCheckPolicy:
 #   minimal:
 #     # Produces the default HTTP configuration for "/healthz" on the Service targetPort.
 #     enabled: true
+
+# Example GCPBackendPolicy that only sets logging, to 100% (all requests logged).
+gcpBackendPolicy:
+  main:
+    enabled: true
+    default:
+      logging:
+        enabled: true
+        sampleRate: 1000000 # 1000000 = 100%
+# Example GCPBackendPolicy: sets a longer backend timeout, enables connection draining,
+# attaches a Cloud Armor security policy and configures client-IP session affinity
+# on the primary Service.
+# gcpBackendPolicy:
+#   main:
+#     enabled: true
+#     primary: true
+#     default:
+#       timeoutSec: 40
+#       connectionDraining:
+#         drainingTimeoutSec: 60
+#       securityPolicy: example-cloud-armor-security-policy
+#       sessionAffinity:
+#         type: CLIENT_IP
+## Other gcpBackendPolicy examples. Commented out to avoid conflicts with the main example.
+# gcpBackendPolicy:
+#   main:
+#     enabled: true
+#     primary: true
+#     default:
+#       # Log 50% of requests and include two optional fields.
+#       logging:
+#         enabled: true
+#         sampleRate: 500000
+#         optionalMode: CUSTOM
+#         optionalFields:
+#           - tls.cipher
+#           - orcaLoadReport.cpu_utilization
+#       # Generated-cookie session affinity with a 50 second TTL.
+#       sessionAffinity:
+#         type: GENERATED_COOKIE
+#         cookieTtlSec: 50
+#   admin:
+#     enabled: true
+#     targetRef:
+#       # Points this policy at the '<release>-<chart>-admin' Service instead of the primary one
+#       name: '{{ .Release.Name }}-{{ .Chart.Name }}-admin'
+#     default:
+#       # Enable IAP in front of the admin backend.
+#       iap:
+#         enabled: true
+#         oauth2ClientSecret:
+#           name: my-iap-secret
+#         clientID: "441323991697-example.apps.googleusercontent.com"
+

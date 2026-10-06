@@ -1,24 +1,24 @@
-{{/* Renders the HealthCheckPolicy objects required by the chart */}}
-{{- define "common.healthcheckpolicy" -}}
-  {{- range $name, $policy := .Values.healthCheckPolicy }}
+{{/* Renders the GCPBackendPolicy objects required by the chart */}}
+{{- define "common.gcpbackendpolicy" -}}
+  {{- range $name, $policy := .Values.gcpBackendPolicy }}
     {{- if $policy.enabled -}}
       {{- $policyValues := $policy -}}
 
       {{/* set defaults */}}
-      {{- if and (not $policyValues.nameOverride) (ne $name (include "common.healthcheckpolicy.primary" $)) -}}
+      {{- if and (not $policyValues.nameOverride) (ne $name (include "common.gcpbackendpolicy.primary" $)) -}}
         {{- $_ := set $policyValues "nameOverride" $name -}}
       {{- end -}}
 
-      {{- $_ := set $ "ObjectValues" (dict "healthCheckPolicy" $policyValues) -}}
-      {{- include "common.classes.healthcheckpolicy" $ }}
+      {{- $_ := set $ "ObjectValues" (dict "gcpBackendPolicy" $policyValues) -}}
+      {{- include "common.classes.gcpbackendpolicy" $ }}
     {{- end }}
   {{- end }}
 {{- end }}
 
-{{/* Return the name of the primary HealthCheckPolicy object */}}
-{{- define "common.healthcheckpolicy.primary" -}}
+{{/* Return the name of the primary GCPBackendPolicy object */}}
+{{- define "common.gcpbackendpolicy.primary" -}}
   {{- $enabled := dict -}}
-  {{- range $name, $policy := .Values.healthCheckPolicy -}}
+  {{- range $name, $policy := .Values.gcpBackendPolicy -}}
     {{- if $policy.enabled -}}
       {{- $_ := set $enabled $name . -}}
     {{- end -}}
